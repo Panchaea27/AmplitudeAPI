@@ -38,6 +38,7 @@ def extract_amplitude_data(start_date,end_date,api_key,secret_key,output_file='d
             return True
         else:
             print("API Call failed")
+            print(response.status_code)
             return False
     except Exception as e:
         print(f"error: str({e})")
