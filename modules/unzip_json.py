@@ -5,7 +5,7 @@ import shutil
 import tempfile
 
 
-def unzip_json(zip_file,output_dir='data'):
+def unzip_json(zip_file,output_dir='data/unzipped'):
     if not os.path.exists(zip_file):
         raise FileNotFoundError(f"File {zip_file} not found")
 
