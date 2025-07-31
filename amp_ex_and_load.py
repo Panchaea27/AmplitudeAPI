@@ -20,6 +20,6 @@ today = datetime.now()
 start_date = yesterday.strftime('%Y%m%dT00')
 end_date = today.strftime('%Y%m%dT00')
 
-# extract_amplitude_data(start_date,end_date,api_token,secret_key)
-# unzip_json('data.zip')
+extract_amplitude_data(start_date,end_date,api_token,secret_key)
+unzip_json('data.zip')
 s3_upload(aws_access_key,aws_secret_key,aws_bucket_name,file_directory,aws_folder)

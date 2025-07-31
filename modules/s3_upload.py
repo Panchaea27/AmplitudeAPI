@@ -24,8 +24,8 @@ def s3_upload(aws_access_key,aws_secret_key,aws_bucket_name,file_directory,aws_f
             print(aws_upload_path)
             s3_client.upload_file(upload_file_path,aws_bucket_name,aws_upload_path)
             print('success')
-            # os.remove(upload_file_path)
-            # print('file deleted')
+            os.remove(upload_file_path)
+            print('file deleted')
     
 
     
