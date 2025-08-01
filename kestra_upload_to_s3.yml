@@ -1,0 +1,60 @@
+# Flow ID and namespace declaration
+id: amplitude_bison
+namespace: amplitude_api_meow
+
+# ---- INPUTS ----
+inputs:
+  - id: github_url
+    type: STRING
+    defaults: https://github.com/Panchaea27/AmplitudeAPI # Default GitHub repo to clone
+
+# ---- TASKS ----
+tasks:
+  - id: wdir
+    type: io.kestra.plugin.core.flow.WorkingDirectory # Set up isolated working directory for the flow
+    tasks:
+      - id: clone
+        type: io.kestra.plugin.git.Clone # Clone a Git repository
+        url: "{{ inputs.github_url}}" # Use provided GitHub URL
+
+      - id: python_ingestion
+        type: "io.kestra.plugin.scripts.python.Commands" # Run Python commands
+        namespaceFiles:
+          enabled: true # Make repo files available to task
+        taskRunner:
+          type: io.kestra.plugin.scripts.runner.docker.Docker # Run inside a Docker container
+        containerImage: python:slim # Use lightweight Python image
+        warningOnStdErr: false # Don’t warn on standard error output
+
+        # Install dependencies
+        beforeCommands:
+          - pip install -r requirements.txt
+
+        # Run the main ingestion script
+        commands:
+          - python amp_ex_and_load.py
+
+        # ---- ENVIRONMENT VARIABLES (Secrets) ----
+        env:
+          # ⚠️ WARNING: These secrets are being pulled via `kv()` which is NOT secure.
+          # This is acceptable only for free/self-hosted setups without secret manager support.
+          # DO NOT use `kv()` for sensitive data in production environments.
+          API_TOKEN: "{{ kv('API_TOKEN')}}"
+          SECRET_KEY: "{{ kv('SECRET_KEY')}}"
+          Access_key_ID: "{{ kv('Access_key_ID')}}"
+          Secret_access_key: "{{ kv('Secret_access_key')}}"
+          AWB_BUCKET_NAME: "{{ kv('AWB_BUCKET_NAME')}}"
+
+    # ---- RETRY STRATEGY ----
+    retry:
+      type: constant
+      interval: PT5S # Wait 5 seconds between attempts
+      maxAttempt: 5 # Try up to 5 times
+      maxDuration: PT10M # Abort if retries take longer than 10 minutes total
+      warningOnRetry: true # Log a warning on each retry
+
+# ---- TRIGGERS ----
+triggers:
+  - id: schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "@hourly" # Trigger the flow every hour

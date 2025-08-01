@@ -80,3 +80,28 @@ Contains utility functions to compare local files against those successfully upl
 
 **list_s3_files.py:**
 A helper script for listing files currently stored in the S3 bucket. Also not invoked by the main pipeline.
+
+## Example: Orchestrating the Ingestion Pipeline with Kestra
+
+Relating to the YAML **kestra_upload_to_s3**
+
+The `amplitude_bison` flow provided in the `amplitude_api_meow` namespace is a Kestra orchestration example that automates the ingestion and transformation of Amplitude data using the `amp_ex_and_load.py` script.
+
+This YAML defines a simple end-to-end process:
+
+- Cloning the source code from a GitHub repository  
+- Installing dependencies in a Dockerized Python environment  
+- Executing the main ingestion script  
+- Retrying gracefully on failure  
+- Triggering on a schedule (hourly)
+
+**Note:** Secret values such as API keys, AWS credentials, and tokens are injected using Kestra’s `kv()` function for simplicity. This is a placeholder method appropriate for free/self-hosted Kestra setups only. Do not use `kv()` for sensitive data in production — instead, integrate with a secure secret manager (e.g., AWS Secrets Manager, HashiCorp Vault, etc.).
+
+This flow is useful as a lightweight, portable orchestration layer and can be extended to include:
+
+- Conditional logic  
+- Notifications  
+- Parallel tasks  
+- Data validation steps
+
+You can adapt the `cron` schedule, the Docker image, and the script behavior to match your specific deployment environment.
