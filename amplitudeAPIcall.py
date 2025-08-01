@@ -1,3 +1,7 @@
+#THIS IS A LEGACY VERSION OF THE AMP_EX_AND_LOAD. IT'S NOT MODULARISED AND IT'S HERE FOR REFERENCE PURPOSES ONLY.
+
+
+
 # Data Extraction using Amplitude's Export API
 # https://amplitude.com/docs/apis/analytics/export
 

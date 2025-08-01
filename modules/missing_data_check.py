@@ -1,3 +1,4 @@
+#THIS MODULE IS NOT USED IN THE MAIN SCRIPT. FOR REFERENCE ONLY!!!
 
 import list_s3_files as lists3files
 import os

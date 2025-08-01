@@ -1,3 +1,5 @@
+#THIS MODULE IS NOT USED IN THE MAIN SCRIPT. FOR REFERENCE ONLY!!!
+
 import boto3
 import os
 from dotenv import load_dotenv
@@ -38,15 +40,3 @@ def list_s3_files(bucket_name, aws_access_key, aws_secret_key, s3_folder=""):
     return(item_list)
 
 
-
-# load_dotenv()
-# api_token = os.getenv("API_TOKEN")
-# secret_key = os.getenv("SECRET_KEY")
-# aws_access_key = os.getenv("Access_key_ID")
-# aws_secret_key = os.getenv("Secret_access_key")
-# aws_bucket_name = os.getenv("AWB_BUCKET_NAME")
-# file_directory = 'data/unzipped'
-# aws_folder = 'python-import/'
-
-# print('u3wu')
-# print(list_s3_files(aws_bucket_name, aws_access_key, aws_secret_key,'python-import/'))
