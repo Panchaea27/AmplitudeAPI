@@ -36,7 +36,7 @@ tasks:
 
         # ---- ENVIRONMENT VARIABLES (Secrets) ----
         env:
-          # ⚠️ WARNING: These secrets are being pulled via `kv()` which is NOT secure.
+          # WARNING: These secrets are being pulled via `kv()` which is NOT secure.
           # This is acceptable only for free/self-hosted setups without secret manager support.
           # DO NOT use `kv()` for sensitive data in production environments.
           API_TOKEN: "{{ kv('API_TOKEN')}}"
